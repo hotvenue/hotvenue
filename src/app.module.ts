@@ -8,12 +8,15 @@ import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
 
 @Module({
-  // @ts-ignore
-  imports: [TypeOrmModule.forRoot({
-    ...config.database,
+  imports: [
+    // @ts-ignore
+    TypeOrmModule.forRoot({
+      ...config.database,
 
-    entities: [`${__dirname}/**/*.entity{.ts,.js}`],
-  }), UserModule],
+      entities: [`${__dirname}/**/*.entity{.ts,.js}`],
+    }),
+    UserModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
