@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { validate } from 'class-validator';
 
 import { User } from './user.entity';
 import {CreateUserDto} from "./dto";
@@ -19,8 +20,14 @@ export class UserService {
 
   async create(userData: CreateUserDto): Promise<User> {
     const user = new User();
-    user.email = userData.email;
+    user.email = userData.email.toLowerCase();
     user.telegramId = userData.telegramId;
+
+    const errors = await validate(user);
+
+    if (errors.length > 0) {
+      throw new Error('Validation failed');
+    }
 
     return this.userRepository.save(user);
   }
