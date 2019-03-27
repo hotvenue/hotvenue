@@ -4,7 +4,7 @@ import { Repository } from 'typeorm';
 import { validate } from 'class-validator';
 
 import { User } from './user.entity';
-import {CreateUserDto} from "./dto";
+import { CreateUserDto } from './dto';
 
 @Injectable()
 export class UserService {
