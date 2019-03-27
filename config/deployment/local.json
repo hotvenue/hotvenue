@@ -1,0 +1,7 @@
+{
+  "database": {
+    "type": "sqlite",
+    "database": "./data/hotvenue.db",
+    "synchronize": true
+  }
+}
