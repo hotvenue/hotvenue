@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { UserModule } from './user/user.module';
 
 @Module({
   // @ts-ignore
@@ -12,7 +13,7 @@ import { AppService } from './app.service';
     ...config.database,
 
     entities: [`${__dirname}/**/*.entity{.ts,.js}`],
-  })],
+  }), UserModule],
   controllers: [AppController],
   providers: [AppService],
 })
