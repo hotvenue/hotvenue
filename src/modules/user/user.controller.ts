@@ -1,5 +1,11 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
-import { ApiUseTags, ApiCreatedResponse, ApiForbiddenResponse, ApiOkResponse, ApiImplicitParam } from '@nestjs/swagger';
+import {
+  ApiUseTags,
+  ApiCreatedResponse,
+  ApiForbiddenResponse,
+  ApiOkResponse,
+  ApiImplicitParam,
+} from '@nestjs/swagger';
 
 import { User } from './user.entity';
 import { UserService } from './user.service';
@@ -26,7 +32,10 @@ export class UserController {
   }
 
   @ApiUseTags('user')
-  @ApiCreatedResponse({ description: 'The user has been successfully created.', type: User })
+  @ApiCreatedResponse({
+    description: 'The user has been successfully created.',
+    type: User,
+  })
   @ApiForbiddenResponse({ description: 'The caller cannot create a user' })
   @Post()
   async create(@Body() userData: CreateUserDto): Promise<User> {

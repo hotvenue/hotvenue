@@ -9,7 +9,8 @@ import { CreateDeviceDto } from './dto';
 @Injectable()
 export class DeviceService {
   constructor(
-    @InjectRepository(Device) private readonly deviceRepository: Repository<Device>,
+    @InjectRepository(Device)
+    private readonly deviceRepository: Repository<Device>,
   ) {}
 
   async findAll(): Promise<Device[]> {
@@ -32,6 +33,5 @@ export class DeviceService {
     }
 
     return this.deviceRepository.save(device);
-
   }
 }

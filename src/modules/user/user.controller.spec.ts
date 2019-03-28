@@ -15,12 +15,15 @@ describe('UserController', () => {
     const app: TestingModule = await Test.createTestingModule({
       // @ts-ignore
       imports: [
-        ConfigModule.resolveRootPath(join(__dirname, '..', '..')).load('config/**/!(*.d).{ts,js}'),
+        ConfigModule.resolveRootPath(join(__dirname, '..', '..')).load(
+          'config/**/!(*.d).{ts,js}',
+        ),
         TypeOrmModule.forRootAsync({
           useFactory: async (config: ConfigService) => config.get('database'),
           inject: [ConfigService],
         }),
-        TypeOrmModule.forFeature([User])],
+        TypeOrmModule.forFeature([User]),
+      ],
       controllers: [UserController],
       providers: [UserService],
     }).compile();
