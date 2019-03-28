@@ -1,17 +1,16 @@
-import { config } from 'node-config-ts';
+import { ConfigModule, ConfigService } from 'nestjs-config';
 
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { UserModule } from './user/user.module';
+import { UserModule } from './modules/user/user.module';
 
 @Module({
   imports: [
-    // @ts-ignore
-    TypeOrmModule.forRoot({
-      ...config.database,
-
-      entities: [`${__dirname}/**/*.entity{.ts,.js}`],
+    ConfigModule.resolveRootPath(__dirname).load('config/**/!(*.d).{ts,js}'),
+    TypeOrmModule.forRootAsync({
+      useFactory: async (config: ConfigService) => config.get('database'),
+      inject: [ConfigService],
     }),
     UserModule,
   ],

@@ -1,7 +1,0 @@
-{
-  "database": {
-    "type": "sqlite",
-    "database": ":memory:",
-    "synchronize": true
-  }
-}

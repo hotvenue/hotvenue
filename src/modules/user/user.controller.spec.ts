@@ -1,6 +1,7 @@
+import { join } from 'path';
 import { Test, TestingModule } from '@nestjs/testing';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { config } from 'node-config-ts';
+import { ConfigModule, ConfigService } from 'nestjs-config';
 
 import { UserController } from './user.controller';
 import { UserService } from './user.service';
@@ -13,11 +14,13 @@ describe('UserController', () => {
   beforeEach(async () => {
     const app: TestingModule = await Test.createTestingModule({
       // @ts-ignore
-      imports: [TypeOrmModule.forRoot({
-        ...config.database,
-
-        entities: [`${__dirname}/../**/*.entity{.ts,.js}`],
-      }), TypeOrmModule.forFeature([User])],
+      imports: [
+        ConfigModule.resolveRootPath(join(__dirname, '..', '..')).load('config/**/!(*.d).{ts,js}'),
+        TypeOrmModule.forRootAsync({
+          useFactory: async (config: ConfigService) => config.get('database'),
+          inject: [ConfigService],
+        }),
+        TypeOrmModule.forFeature([User])],
       controllers: [UserController],
       providers: [UserService],
     }).compile();
