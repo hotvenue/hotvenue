@@ -1,31 +1,14 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
-import { IsEmail, IsString } from 'class-validator';
-import { ApiModelProperty, ApiModelPropertyOptional } from '@nestjs/swagger';
+import { Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { ApiModelProperty } from '@nestjs/swagger';
+
+import { CreateUserDto } from './dto';
 
 @Entity()
-export class User {
+export class User extends CreateUserDto {
   @PrimaryGeneratedColumn('uuid')
   @ApiModelProperty({
     description: 'The id of the user',
     format: 'uuid',
   })
   id: string;
-
-  @Column({
-    length: 500,
-    unique: true,
-  })
-  @ApiModelProperty({
-    description: 'The email of the user, must be unique',
-    format: 'email',
-  })
-  @IsString()
-  @IsEmail()
-  email: string;
-
-  @Column()
-  @ApiModelPropertyOptional({
-    description: 'The telegram identifier of the user',
-  })
-  telegramId: string;
 }

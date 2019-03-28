@@ -1,14 +1,23 @@
+import { Column } from 'typeorm';
+import { IsEmail, IsString } from 'class-validator';
 import { ApiModelProperty, ApiModelPropertyOptional } from '@nestjs/swagger';
 
 export class CreateUserDto {
+  @Column({
+    length: 500,
+    unique: true,
+  })
   @ApiModelProperty({
-    description: 'The email to indentify the user',
+    description: 'The email of the user, must be unique',
     format: 'email',
   })
-  readonly email: string;
+  @IsString()
+  @IsEmail()
+  email: string;
 
+  @Column()
   @ApiModelPropertyOptional({
-    description: 'The telegram identification number',
+    description: 'The telegram identifier of the user',
   })
-  readonly telegramId: string;
+  telegramId: string;
 }
